@@ -12,6 +12,12 @@ import android.widget.EditText
 import androidx.core.graphics.drawable.DrawableCompat
 
 class MainActivity : AppCompatActivity() {
+    var p_boton: Button? = null
+    var p_text:String = ""
+
+    var s_boton: Button? = null
+    var s_text:String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +72,8 @@ class MainActivity : AppCompatActivity() {
             val background = but.background as RippleDrawable
             val backgroundGradient = background.findDrawableByLayerId(R.id.item_shape) as GradientDrawable
             backgroundGradient.setColor(Color.parseColor(randomColor))
-
         }
     }
-
 
     fun BotonClick(view: View) {
         val but: Button = view as Button
@@ -80,7 +84,37 @@ class MainActivity : AppCompatActivity() {
             but.setTextSize(0F)
         }
 
+        if(p_text == "") {
+            p_text = but.text as String
+            p_boton = but
+            p_boton?.isClickable = false
+        }else if(s_text == ""){
+            s_text = but.text as String
+            s_boton = but
+        }
+
+        if (s_text !== "" && p_text!==""){
+            comparar()
+        }
+
     }
+
+    fun comparar(){
+            Log.i("memoria", "entro")
+            if (p_text == s_text) {
+                s_boton?.isClickable = false
+            } else {
+                s_boton?.setTextSize(0f)
+                p_boton?.setTextSize(0f)
+                p_boton?.isClickable = true
+                p_boton = null
+                s_boton = null
+                s_text = ""
+                p_text = ""
+            }
+
+    }
+
 
 
 }
